@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import "./App.css";
 import {
   collection,
@@ -8,7 +9,10 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { db } from "./data/firebase";
-import { useState, useEffect } from "react";
+import { Title } from "./components/Title";
+import { AddTodo } from "./components/AddTodo";
+import { Todo } from "./components/Todo";
+
 
 function App() {
   //
@@ -20,7 +24,7 @@ function App() {
     const unsub = onSnapshot(q, (querySnapshot) => {
       let todosArray = [];
       querySnapshot.forEach((doc) => {
-        todos.push({ ...doc.data(), id: doc.id });
+        todosArray.push({ ...doc.data(), id: doc.id });
       });
       setTodos(todosArray);
     });
@@ -37,7 +41,21 @@ function App() {
     await deleteDoc(doc(db, "todo", id));
   };
 
-  return <div className="App"></div>;
+  return (
+    <div className="App">
+      <div>
+        <Title />
+      </div>
+      <div>
+        <AddTodo />
+      </div>
+      <div className="todo_container">
+        {todos.map((todo) => (
+          <Todo />
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export default App;
