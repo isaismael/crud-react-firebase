@@ -13,12 +13,9 @@ import { Title } from "./components/Title";
 import { AddTodo } from "./components/AddTodo";
 import { Todo } from "./components/Todo";
 
-
 function App() {
-  //
   const [todos, setTodos] = useState([]);
 
-  //
   useEffect(() => {
     const q = query(collection(db, "todos"));
     const unsub = onSnapshot(q, (querySnapshot) => {
@@ -31,15 +28,15 @@ function App() {
     return () => unsub();
   }, []);
 
-  //
   const handleEdit = async (todo, title) => {
     await updateDoc(doc(db, "todos", todo.id), { title: title });
   };
-
-  //
   const handleDelete = async (id) => {
-    await deleteDoc(doc(db, "todo", id));
+    await deleteDoc(doc(db, "todos", id));
   };
+  const toggleComplete = async (todo)=>{
+    await updateDoc(doc(db,"todos",todo.id),{completed:!todo.completed})
+  }
 
   return (
     <div className="App">
@@ -47,12 +44,16 @@ function App() {
         <Title />
       </div>
       <div>
-        <AddTodo />
+        <AddTodo/>
       </div>
       <div className="todo_container">
-        {todos.map((todo) => (
-          <Todo />
+        {todos.map((todo)=>(
+          <Todo todo={todo}
+          handleDelete={handleDelete}
+          toggleComplete={toggleComplete}
+          handleEdit={handleEdit}/>
         ))}
+
       </div>
     </div>
   );
