@@ -1,13 +1,35 @@
+import { useState } from "react";
 
-export const Todo = ({todo, handleDelete}) => {
+export function Todo({ todo, handleDelete, toggleComplete, handleEdit }) {
+  const [newTitle, setNewTitle] = useState(todo.title);
+  const handleChange = (e) => {
+    if (todo.completed === true) {
+      setNewTitle(todo.title);
+    } else {
+      todo.title = "";
+      setNewTitle(e.target.value);
+    }
+  };
+
   return (
     <div className="todo">
-      <input style={{textDecoration:todo.completed && 'line-through'}} 
-      value={todo.title}/>
+      <input
+        className="list"
+        style={{ textDecoration: todo.completed && "line-through" }}
+        value={todo.title === "" ? newTitle : todo.title}
+        onChange={handleChange}
+      />
       <div>
-        <button onClick={()=>handleDelete(todo.id)}>Delete</button>
+        <button
+          className="button-complete"
+          onClick={() => toggleComplete(todo)}
+        >
+          Marcar
+        </button>
+        <button onClick={() => handleEdit(todo, newTitle)}className="button-edit">Editar</button>
+
+        <button className="button-delete" onClick={() => handleDelete(todo.id)}>eliminar</button>
       </div>
     </div>
-  )
+  );
 }
-

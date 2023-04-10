@@ -34,8 +34,9 @@ function App() {
   const handleDelete = async (id) => {
     await deleteDoc(doc(db, "todos", id));
   };
+
   const toggleComplete = async (todo)=>{
-    await updateDoc(doc(db,"todos",todo.id),{completed:!todo.completed})
+    await updateDoc(doc(db,'todos',todo.id),{completed:!todo.completed})
   }
 
   return (

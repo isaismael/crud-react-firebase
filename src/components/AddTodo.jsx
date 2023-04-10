@@ -18,16 +18,17 @@ export const AddTodo = () => {
 
   return (
     <form onSubmit={Insertar}>
-        <div>
-            <input type="text" 
-            placeholder="Ingresar Tarea..."
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            />
-        </div>
-        <div className="btn_container">
-          <button>Insertar</button>
-        </div>
+      <div className="input_container">
+        <input className="txtTodo"
+          type="text"
+          placeholder="Ingresar tarea..."
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+      </div>
+      <div className="btn_container">
+        <button>Insertar</button>
+      </div>
     </form>
   )
 }
