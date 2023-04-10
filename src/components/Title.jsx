@@ -1,6 +1,8 @@
 
 export const Title = () => {
   return (
-    <div>Hola desde Title.jsx</div>
+    <div className="title">
+      <h1>CRUD FireBase - React</h1>
+    </div>
   )
 }
